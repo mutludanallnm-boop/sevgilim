@@ -3,214 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Çatlak Fıstığıma ❤️</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+    <title>Sürpriz!</title>
     <style>
-        /* GENEL SAYFA DÜZENİ */
+        /* GENEL AYARLAR */
         body {
             margin: 0;
             padding: 0;
-            /* İstediğin Açık Mor Arka Plan */
-            background-color: #E0BBE4;
+            background-color: #E0BBE4; /* Açık Mor */
             background-image: linear-gradient(135deg, #E0BBE4 0%, #957DAD 100%);
-            font-family: 'Poppins', sans-serif;
-            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            text-align: center;
-            overflow-x: hidden;
+            overflow: hidden;
         }
 
-        /* Ana Kutu */
-        .main-container {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 30px;
-            border-radius: 30px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        /* ORTA KUTU */
+        .container {
+            background-color: white;
             width: 90%;
-            max-width: 800px;
-            min-height: 500px; /* Kutunun boyunu biraz uzattım */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer; /* Tıklanabilir olduğunu gösterir */
-            transition: all 0.5s ease;
-            position: relative;
-        }
-
-        /* --- AŞAMA 1: KEDİ ÇİZİMİ --- */
-        #stage-1-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .cat-drawing {
-            width: 280px; /* Kedi boyutu */
-            height: auto;
-            /* Hafifçe süzülme animasyonu */
-            animation: float 3s infinite ease-in-out;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
-
-        .click-hint {
-            color: #8e24aa;
-            margin-top: 20px;
-            font-weight: bold;
-            font-size: 1.2rem;
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
-
-        /* --- AŞAMA 2: NOT --- */
-        #stage-2-note {
-            display: none; /* Başlangıçta gizli */
-            font-family: 'Dancing Script', cursive;
-            font-size: 2.2rem;
-            color: #880e4f;
-            line-height: 1.6;
-            padding: 20px;
-            border: 3px dashed #ce93d8;
+            max-width: 600px;
+            padding: 40px;
             border-radius: 20px;
-            background-color: #f3e5f5;
-            width: 80%;
-            animation: fadeIn 1s;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            border: 4px solid #fff;
+            cursor: pointer; /* Tıklanabilir olduğunu gösterir */
+            transition: transform 0.2s;
+        }
+
+        .container:active {
+            transform: scale(0.98); /* Tıklayınca hafif küçülme efekti */
+        }
+
+        /* 1. AŞAMA: KEDİ EMOJİSİ */
+        #stage1 {
+            display: block; /* Başlangıçta bu açık */
+        }
+
+        .emoji-big {
+            font-size: 100px;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hint {
+            color: #880e4f;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* 2. AŞAMA: NOT */
+        #stage2 {
+            display: none; /* Gizli */
         }
         
-        .sub-hint {
-            font-family: 'Poppins', sans-serif;
-            font-size: 0.9rem;
-            color: #555;
-            margin-top: 15px;
-            display: block;
+        .note-text {
+            font-size: 24px;
+            color: #d81b60;
+            line-height: 1.5;
+            font-style: italic;
         }
 
-        /* --- AŞAMA 3: ALBÜM --- */
-        #stage-3-album {
-            display: none; /* Başlangıçta gizli */
-            width: 100%;
-            animation: fadeIn 1.5s;
+        /* 3. AŞAMA: ALBÜM */
+        #stage3 {
+            display: none; /* Gizli */
         }
 
-        h2 {
-            color: #6a1b9a;
-            font-family: 'Dancing Script', cursive;
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
             gap: 10px;
-            padding: 10px;
-            max-height: 60vh; /* Çok uzarsa kaydırma çubuğu çıksın */
-            overflow-y: auto; 
+            justify-content: center;
+            max-height: 300px;
+            overflow-y: auto;
         }
 
-        .photo {
-            width: 100%;
-            height: 150px;
+        .photo-box {
+            width: 100px;
+            height: 100px;
             object-fit: cover;
             border-radius: 10px;
-            border: 3px solid #fff;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
+            border: 2px solid #ddd;
         }
 
-        .photo:hover {
-            transform: scale(1.1);
-            z-index: 10;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Müzik Player Gizli */
-        #youtube-audio { display: none; }
+        /* MÜZİK KUTUSU (GİZLİ) */
+        #music-box { display: none; }
 
     </style>
 </head>
 <body>
 
-    <div class="main-container" onclick="handleStages()">
+    <div class="container" onclick="nextStep()">
         
-        <div id="stage-1-content">
-            <img src="https://cdn-icons-png.flaticon.com/512/1864/1864514.png" alt="Sürpriz Kedi" class="cat-drawing">
-            <p class="click-hint">Hey! Sana bir sürprizim var... Tıkla! 🐾</p>
+        <div id="stage1">
+            <div class="emoji-big">😻💐</div>
+            <p class="hint">Sana bir sürprizim var!<br>Kutuya tıkla bakalım... 🐾</p>
         </div>
 
-        <div id="stage-2-note">
-            seni 14 şubatta değil yaşadığım boyunca çok seveceğim çatlak fısıtğımmm ❤️
-            <span class="sub-hint">(Devam etmek için tekrar tıkla...)</span>
+        <div id="stage2">
+            <div class="emoji-big">💌</div>
+            <p class="note-text">
+                "Seni 14 Şubat'ta değil, yaşadığım müddetçe her gün seveceğim çatlak fıstığımmm!" ❤️
+            </p>
+            <p style="font-size: 12px; color: #aaa;">(Devam etmek için tekrar tıkla)</p>
         </div>
 
-        <div id="stage-3-album">
-            <h2>Bizim Hikayemiz</h2>
-            <div class="gallery-grid" id="photo-gallery">
+        <div id="stage3">
+            <h2 style="color: #6a1b9a;">Bizim Hikayemiz</h2>
+            <div class="gallery" id="photo-area">
                 </div>
         </div>
 
     </div>
 
-    <div id="youtube-audio"></div>
+    <div id="music-box"></div>
 
     <script>
-        let stage = 1; // Hangi aşamadayız?
+        let step = 1;
 
-        function handleStages() {
-            if (stage === 1) {
-                // --- 1. TIKLAMA: Müzik Başlar, Not Gelir ---
+        function nextStep() {
+            if (step === 1) {
+                // 1'den 2'ye geçiş
+                document.getElementById('stage1').style.display = 'none';
+                document.getElementById('stage2').style.display = 'block';
                 
-                // Müziği Başlat (Tuğkan - Sen Benim)
-                document.getElementById('youtube-audio').innerHTML = '<iframe width="1" height="1" src="https://www.youtube.com/embed/g7KECjX1WcI?autoplay=1&loop=1&playlist=g7KECjX1WcI" frameborder="0" allow="autoplay; encrypted-media"></iframe>';
+                // Müziği Başlat
+                document.getElementById('music-box').innerHTML = '<iframe width="1" height="1" src="https://www.youtube.com/embed/g7KECjX1WcI?autoplay=1&loop=1" frameborder="0" allow="autoplay; encrypted-media"></iframe>';
                 
-                // Ekranı Değiştir
-                document.getElementById('stage-1-content').style.display = 'none';
-                document.getElementById('stage-2-note').style.display = 'block';
-                
-                stage = 2; // Aşamayı ilerlet
+                step = 2;
             } 
-            else if (stage === 2) {
-                // --- 2. TIKLAMA: Not Gider, Albüm Gelir ---
-                
-                document.getElementById('stage-2-note').style.display = 'none';
-                document.getElementById('stage-3-album').style.display = 'block';
+            else if (step === 2) {
+                // 2'den 3'e geçiş
+                document.getElementById('stage2').style.display = 'none';
+                document.getElementById('stage3').style.display = 'block';
                 
                 // Fotoğrafları Yükle
                 loadPhotos();
-
-                stage = 3; // Son aşama
-                // İmleci normale döndür, artık tıklanacak bir şey yok
-                document.querySelector('.main-container').style.cursor = 'default';
-                document.querySelector('.main-container').onclick = null;
+                
+                step = 3;
+                // Artık tıklamayı iptal et
+                document.querySelector('.container').onclick = null;
+                document.querySelector('.container').style.cursor = 'default';
             }
         }
 
         function loadPhotos() {
-            const gallery = document.getElementById('photo-gallery');
-            
-            // 1'den 17'ye kadar olan fotoğrafları döngüyle ekle
-            for (let i = 1; i <= 17; i++) {
+            const area = document.getElementById('photo-area');
+            // 17 Fotoğrafı Yükle
+            for(let i=1; i<=17; i++) {
                 let img = document.createElement('img');
-                // DİKKAT: Fotoğrafların "foto" klasöründe ve uzantısı ".jpg" olmalı
-                img.src = `foto/foto${i}.jpg`; 
-                img.className = 'photo';
-                img.alt = `Anı ${i}`;
+                // Resim yolu: foto/foto1.jpg
+                img.src = 'foto/foto' + i + '.jpg'; 
+                img.className = 'photo-box';
                 
-                // Resim yüklenemezse (isim hatası vs.) çirkin görünmesin diye gizle
-                img.onerror = function() { this.style.display = 'none'; };
+                // Eğer resim bulunamazsa kutuyu gizle (Çirkin görünmesin)
+                img.onerror = function() {
+                    this.style.display = 'none';
+                };
                 
-                gallery.appendChild(img);
+                area.appendChild(img);
             }
         }
     </script>
