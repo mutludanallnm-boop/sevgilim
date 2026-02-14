@@ -171,62 +171,6 @@
                 area.appendChild(img);
             }
         }
- <script>
-        let step = 1;
-
-        function nextStep() {
-            if (step === 1) {
-                // 1'den 2'ye geçiş
-                document.getElementById('stage1').style.display = 'none';
-                document.getElementById('stage2').style.display = 'block';
-                
-                // Müziği Başlat
-                document.getElementById('music-box').innerHTML = '<iframe width="1" height="1" src="https://www.youtube.com/embed/g7KECjX1WcI?autoplay=1&loop=1" frameborder="0" allow="autoplay; encrypted-media"></iframe>';
-                
-                step = 2;
-            } 
-            else if (step === 2) {
-                // 2'den 3'e geçiş
-                document.getElementById('stage2').style.display = 'none';
-                document.getElementById('stage3').style.display = 'block';
-                
-                // Fotoğrafları Yükle
-                loadPhotos();
-                
-                step = 3;
-                document.querySelector('.container').onclick = null;
-                document.querySelector('.container').style.cursor = 'default';
-            }
-        }
-
-        function loadPhotos() {
-            const area = document.getElementById('photo-area');
-            
-            // Hata olursa gizleme özelliğini kapattım ki en azından kutuyu gör
-            for(let i=1; i<=17; i++) {
-                let img = document.createElement('img');
-                img.className = 'photo-box';
-                
-                // Önce .jpg deniyoruz
-                img.src = `foto/foto${i}.jpg`; 
-                
-                // Eğer .jpg yoksa, otomatik olarak diğerlerini dener
-                img.onerror = function() {
-                    // Eğer .jpg açılmadıysa, belki .jpeg'dir?
-                    if (this.src.endsWith('.jpg')) {
-                        this.src = `foto/foto${i}.jpeg`;
-                    }
-                    // Eğer .jpeg de açılmadıysa, belki .png'dir?
-                    else if (this.src.endsWith('.jpeg')) {
-                        this.src = `foto/foto${i}.png`;
-                    }
-                    // Hiçbiri yoksa o zaman hata verir
-                    else {
-                        this.alt = "Resim Bulunamadı";
-                    }
-                };
-                
-                area.appendChild(img);
-            }
-        }
     </script>
+</body>
+</html>
