@@ -38,9 +38,7 @@
         }
 
         /* 1. AŞAMA: KEDİ EMOJİSİ */
-        #stage1 {
-            display: block;
-        }
+        #stage1 { display: block; }
 
         .emoji-big {
             font-size: 100px;
@@ -60,9 +58,7 @@
         }
 
         /* 2. AŞAMA: NOT */
-        #stage2 {
-            display: none;
-        }
+        #stage2 { display: none; }
         
         .note-text {
             font-size: 24px;
@@ -72,16 +68,14 @@
         }
 
         /* 3. AŞAMA: ALBÜM */
-        #stage3 {
-            display: none;
-        }
+        #stage3 { display: none; }
 
         .gallery {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
             justify-content: center;
-            max-height: 350px; /* Kaydırma alanı */
+            max-height: 350px;
             overflow-y: auto;
             padding: 10px;
         }
@@ -94,9 +88,6 @@
             border: 2px solid #ddd;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-
-        /* MÜZİK KUTUSU (GİZLİ) */
-        #music-box { display: none; }
 
     </style>
 </head>
@@ -125,7 +116,9 @@
 
     </div>
 
-    <div id="music-box"></div>
+    <audio id="myAudio" loop>
+        <source src="muzik.mp3" type="audio/mpeg">
+    </audio>
 
     <script>
         let step = 1;
@@ -136,9 +129,12 @@
                 document.getElementById('stage1').style.display = 'none';
                 document.getElementById('stage2').style.display = 'block';
                 
-                // --- MÜZİK KODU GÜNCELLENDİ ---
-                // playsinline=1 ve controls=0 ekledik. Mobilde daha iyi çalışır.
-                document.getElementById('music-box').innerHTML = '<iframe width="1" height="1" src="https://www.youtube.com/embed/g7KECjX1WcI?autoplay=1&playsinline=1&controls=0&loop=1&playlist=g7KECjX1WcI" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
+                // --- MP3 ÇALMA KODU ---
+                var audio = document.getElementById("myAudio");
+                audio.volume = 0.5; // Ses seviyesi %50
+                audio.play().catch(function(error) {
+                    console.log("Müzik çalma hatası:", error);
+                });
                 
                 step = 2;
             } 
@@ -147,7 +143,6 @@
                 document.getElementById('stage2').style.display = 'none';
                 document.getElementById('stage3').style.display = 'block';
                 
-                // Fotoğrafları Yükle
                 loadPhotos();
                 
                 step = 3;
@@ -158,20 +153,11 @@
 
         function loadPhotos() {
             const area = document.getElementById('photo-area');
-            
-            // 1'den 9'a kadar döngü (Senin fotoğraflarına göre)
             for(let i=1; i<=9; i++) {
                 let img = document.createElement('img');
                 img.className = 'photo-box';
-                
-                // DOSYA YOLU: foto/1.jpg, foto/2.jpg ...
                 img.src = 'foto/' + i + '.jpg'; 
-                
-                // Resim yüklenemezse gizle
-                img.onerror = function() {
-                    this.style.display = 'none';
-                };
-                
+                img.onerror = function() { this.style.display = 'none'; };
                 area.appendChild(img);
             }
         }
