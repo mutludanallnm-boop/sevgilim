@@ -136,8 +136,9 @@
                 document.getElementById('stage1').style.display = 'none';
                 document.getElementById('stage2').style.display = 'block';
                 
-                // Müzik Başlat (Tuğkan - Sen Benim)
-                document.getElementById('music-box').innerHTML = '<iframe width="1" height="1" src="https://www.youtube.com/embed/g7KECjX1WcI?autoplay=1&loop=1" frameborder="0" allow="autoplay; encrypted-media"></iframe>';
+                // --- MÜZİK KODU GÜNCELLENDİ ---
+                // playsinline=1 ve controls=0 ekledik. Mobilde daha iyi çalışır.
+                document.getElementById('music-box').innerHTML = '<iframe width="1" height="1" src="https://www.youtube.com/embed/g7KECjX1WcI?autoplay=1&playsinline=1&controls=0&loop=1&playlist=g7KECjX1WcI" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
                 
                 step = 2;
             } 
@@ -158,12 +159,12 @@
         function loadPhotos() {
             const area = document.getElementById('photo-area');
             
-            // 1'den 9'a kadar döngü kurduk
+            // 1'den 9'a kadar döngü (Senin fotoğraflarına göre)
             for(let i=1; i<=9; i++) {
                 let img = document.createElement('img');
                 img.className = 'photo-box';
                 
-                // ARTIK DOSYA YOLU: foto/1.jpg, foto/2.jpg şeklinde
+                // DOSYA YOLU: foto/1.jpg, foto/2.jpg ...
                 img.src = 'foto/' + i + '.jpg'; 
                 
                 // Resim yüklenemezse gizle
