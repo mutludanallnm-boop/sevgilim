@@ -29,17 +29,17 @@
             text-align: center;
             box-shadow: 0 10px 25px rgba(0,0,0,0.3);
             border: 4px solid #fff;
-            cursor: pointer; /* Tıklanabilir olduğunu gösterir */
+            cursor: pointer;
             transition: transform 0.2s;
         }
 
         .container:active {
-            transform: scale(0.98); /* Tıklayınca hafif küçülme efekti */
+            transform: scale(0.98);
         }
 
         /* 1. AŞAMA: KEDİ EMOJİSİ */
         #stage1 {
-            display: block; /* Başlangıçta bu açık */
+            display: block;
         }
 
         .emoji-big {
@@ -61,7 +61,7 @@
 
         /* 2. AŞAMA: NOT */
         #stage2 {
-            display: none; /* Gizli */
+            display: none;
         }
         
         .note-text {
@@ -73,7 +73,7 @@
 
         /* 3. AŞAMA: ALBÜM */
         #stage3 {
-            display: none; /* Gizli */
+            display: none;
         }
 
         .gallery {
@@ -81,8 +81,9 @@
             flex-wrap: wrap;
             gap: 10px;
             justify-content: center;
-            max-height: 300px;
+            max-height: 350px; /* Kaydırma alanı */
             overflow-y: auto;
+            padding: 10px;
         }
 
         .photo-box {
@@ -91,6 +92,7 @@
             object-fit: cover;
             border-radius: 10px;
             border: 2px solid #ddd;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
         /* MÜZİK KUTUSU (GİZLİ) */
@@ -130,17 +132,17 @@
 
         function nextStep() {
             if (step === 1) {
-                // 1'den 2'ye geçiş
+                // 1 -> 2
                 document.getElementById('stage1').style.display = 'none';
                 document.getElementById('stage2').style.display = 'block';
                 
-                // Müziği Başlat
+                // Müzik Başlat (Tuğkan - Sen Benim)
                 document.getElementById('music-box').innerHTML = '<iframe width="1" height="1" src="https://www.youtube.com/embed/g7KECjX1WcI?autoplay=1&loop=1" frameborder="0" allow="autoplay; encrypted-media"></iframe>';
                 
                 step = 2;
             } 
             else if (step === 2) {
-                // 2'den 3'e geçiş
+                // 2 -> 3
                 document.getElementById('stage2').style.display = 'none';
                 document.getElementById('stage3').style.display = 'block';
                 
@@ -148,7 +150,6 @@
                 loadPhotos();
                 
                 step = 3;
-                // Artık tıklamayı iptal et
                 document.querySelector('.container').onclick = null;
                 document.querySelector('.container').style.cursor = 'default';
             }
@@ -156,14 +157,16 @@
 
         function loadPhotos() {
             const area = document.getElementById('photo-area');
-            // 17 Fotoğrafı Yükle
-            for(let i=1; i<=17; i++) {
+            
+            // 1'den 9'a kadar döngü kurduk
+            for(let i=1; i<=9; i++) {
                 let img = document.createElement('img');
-                // Resim yolu: foto/foto1.jpg
-                img.src = 'foto/foto' + i + '.jpg'; 
                 img.className = 'photo-box';
                 
-                // Eğer resim bulunamazsa kutuyu gizle (Çirkin görünmesin)
+                // ARTIK DOSYA YOLU: foto/1.jpg, foto/2.jpg şeklinde
+                img.src = 'foto/' + i + '.jpg'; 
+                
+                // Resim yüklenemezse gizle
                 img.onerror = function() {
                     this.style.display = 'none';
                 };
